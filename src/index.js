@@ -5,6 +5,7 @@
 
 import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
+import { serialize } from '@wordpress/blocks';
 import { SlotFillProvider } from '@wordpress/components';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { use, useDispatch, useSelect } from '@wordpress/data';
@@ -242,6 +243,7 @@ function IsolatedBlockEditor( props ) {
 		__experimentalOnChange,
 		__experimentalValue,
 		__experimentalOnSelection,
+		onChangeContent,
 		...params
 	} = props;
 
@@ -270,8 +272,13 @@ function IsolatedBlockEditor( props ) {
 				<SlotFillProvider>
 					<BlockEditorContainer
 						{ ...params }
-						onInput={ __experimentalOnInput }
-						onChange={ __experimentalOnChange }
+						onInput={ (newBlocks) => {
+							__experimentalOnInput?.(newBlocks);
+							onChangeContent?.( serialize( newBlocks ) )
+						} }
+						onChange={ (newBlocks) => {
+							__experimentalOnChange?.(newBlocks);
+						} }
 						blocks={ __experimentalValue }
 						settings={ settings }
 					>

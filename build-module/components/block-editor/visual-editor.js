@@ -153,7 +153,7 @@ const VisualEditor = _ref3 => {
 
   // If there is a layout definition, then we're on Gutenberg > v14, which requires us to pass the
   // 'constrained' type
-  const usedLayout = layout !== null && layout !== void 0 && layout.definitions ? {
+  const usedLayout = layout?.definitions ? {
     ...layout,
     type: 'constrained'
   } : layout;

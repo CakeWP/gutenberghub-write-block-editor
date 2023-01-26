@@ -7,6 +7,7 @@ import { createElement } from "@wordpress/element";
 
 import '@wordpress/editor';
 import { StrictMode, useEffect } from '@wordpress/element';
+import { serialize } from '@wordpress/blocks';
 import { SlotFillProvider } from '@wordpress/components';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { use, useDispatch, useSelect } from '@wordpress/data';
@@ -244,6 +245,7 @@ function IsolatedBlockEditor(props) {
     __experimentalOnChange,
     __experimentalValue,
     __experimentalOnSelection,
+    onChangeContent,
     ...params
   } = props;
 
@@ -257,14 +259,19 @@ function IsolatedBlockEditor(props) {
     end: select('core/block-editor').getSelectionEnd()
   }), []);
   useEffect(() => {
-    __experimentalOnSelection === null || __experimentalOnSelection === void 0 ? void 0 : __experimentalOnSelection(editorSelection);
+    __experimentalOnSelection?.(editorSelection);
   }, [editorSelection]);
   return createElement(StrictMode, null, createElement(ShortcutProvider, null, createElement(ContentSaver, {
     onSaveBlocks: onSaveBlocks,
     onSaveContent: onSaveContent
   }), createElement(PatternMonitor, null), createElement(SlotFillProvider, null, createElement(BlockEditorContainer, _extends({}, params, {
-    onInput: __experimentalOnInput,
-    onChange: __experimentalOnChange,
+    onInput: newBlocks => {
+      __experimentalOnInput?.(newBlocks);
+      onChangeContent?.(serialize(newBlocks));
+    },
+    onChange: newBlocks => {
+      __experimentalOnChange?.(newBlocks);
+    },
     blocks: __experimentalValue,
     settings: settings
   }), children))));

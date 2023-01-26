@@ -137,14 +137,14 @@ export default compose([withSelect((select, ownProps) => {
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
-      onChange === null || onChange === void 0 ? void 0 : onChange(...args);
+      onChange?.(...args);
       updateBlocksWithUndo(...args);
     },
     onInput: function () {
       for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
         args[_key2] = arguments[_key2];
       }
-      onInput === null || onInput === void 0 ? void 0 : onInput(...args);
+      onInput?.(...args);
       updateBlocksWithoutUndo(...args);
     }
   };

@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import React from 'react';
 import IsolatedBlockEditor, { DocumentSection } from '../src/index';
 
 /**
@@ -14,7 +15,11 @@ export default {
 };
 
 export const Default = () => {
-	return <IsolatedBlockEditor settings={ {} } />;
+	return (
+		<div style={{ height: '800px' }}>
+			<IsolatedBlockEditor settings={ {} } />
+		</div>
+	);
 };
 
 export const Controlled = ( { onInput, onChange, onUndo, onRedo, onSelection } ) => {
@@ -40,14 +45,17 @@ export const Controlled = ( { onInput, onChange, onUndo, onRedo, onSelection } )
 	}, [ onUndo, onRedo ] );
 
 	return (
-		<IsolatedBlockEditor
-			__experimentalOnSelection={ onSelection }
-			__experimentalValue={ blocks }
-			__experimentalOnInput={ handleOnInput }
-			__experimentalOnChange={ handleOnChange }
-			__experimentalUndoManager={ undoManager }
-			settings={ {} }
-		/>
+		<div style={{ height: '800px' }}>
+			<IsolatedBlockEditor
+				__experimentalOnSelection={ onSelection }
+				__experimentalValue={ blocks }
+				__experimentalOnInput={ handleOnInput }
+				__experimentalOnChange={ handleOnChange }
+				onChangeContent={ newContent => console.log(newContent) }
+				__experimentalUndoManager={ undoManager }
+				settings={ {} }
+			/>
+		</div>
 	);
 };
 
